@@ -1,7 +1,7 @@
 package edu.pucp.gtics.lab11_gtics_20232.repository;
 
 import edu.pucp.gtics.lab11_gtics_20232.entity.Juegos;
-import edu.pucp.gtics.lab11_gtics_20232.entity.JuegosUserDto;
+import edu.pucp.gtics.lab11_gtics_20232.dto.JuegosUserDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
