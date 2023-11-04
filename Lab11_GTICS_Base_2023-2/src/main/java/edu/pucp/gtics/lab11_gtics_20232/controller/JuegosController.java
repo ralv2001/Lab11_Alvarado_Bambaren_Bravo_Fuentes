@@ -1,5 +1,9 @@
 package edu.pucp.gtics.lab11_gtics_20232.controller;
 
+import edu.pucp.gtics.lab11_gtics_20232.Daos.DistribuidorasDAO;
+import edu.pucp.gtics.lab11_gtics_20232.Daos.GeneroJuegoDAO;
+import edu.pucp.gtics.lab11_gtics_20232.Daos.JuegosDAO;
+import edu.pucp.gtics.lab11_gtics_20232.Daos.PlataformasDAO;
 import edu.pucp.gtics.lab11_gtics_20232.entity.*;
 import edu.pucp.gtics.lab11_gtics_20232.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +35,21 @@ public class JuegosController {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    JuegosDAO juegosDAO;
+    @Autowired
+    GeneroJuegoDAO generoJuegoDAO;
+    @Autowired
+    PlataformasDAO plataformasDAO;
+    @Autowired
+    DistribuidorasDAO distribuidorasDAO;
+
 
     @GetMapping(value = {"/juegos/lista"})
-    public String listaJuegos (...){
-
+    public String listaJuegos (Model model){
+        model.addAttribute("listaJuegos",juegosRepository.findAll());
+        //model.addAttribute("listaJuegos",juegosDAO.listaJuegos());
+        return "juegos/lista";
     }
 
     @GetMapping(value = {"", "/", "/vista"})
@@ -52,6 +67,13 @@ public class JuegosController {
         model.addAttribute("listaGeneros", listaGeneros);
         return "juegos/editarFrm";
     }
+    /*@GetMapping("/juegos/nuevo1")
+    public String nuevoJuego(@ModelAttribute("juego") Juegos juegos, Model model){
+        model.addAttribute("listaGeneros",generoJuegoDAO.listaGenero());
+        model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
+        model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
+        return "juegos/editarFrm";
+    }*/
 
     @GetMapping("/juegos/editar")
     public String editarJuegos(@RequestParam("id") int id, Model model){
@@ -94,6 +116,25 @@ public class JuegosController {
 
 
     }
+    @PostMapping("juegos/guardar")
+    public String guardarJuego(@ModelAttribute("juego") @Valid Juegos juegos,BindingResult bindingResult,
+                               Model model,RedirectAttributes attributes){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("listaGeneros",generoJuegoDAO.listaGenero());
+            model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
+            model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
+            return "juegos/editarFrm";
+        }else{
+            String msg="Juego" + (juegos.getIdjuego()==0 ? "creado":"actualizado") + "exitosamente";
+            attributes.addFlashAttribute("msg",msg);
+            juegosDAO.guardarJuego(juegos);
+            return "redirect:/juegos/lista";
+        }
+    }
+
+
+
+
 
     @GetMapping("/juegos/borrar")
     public String borrarDistribuidora(@RequestParam("id") int id){
