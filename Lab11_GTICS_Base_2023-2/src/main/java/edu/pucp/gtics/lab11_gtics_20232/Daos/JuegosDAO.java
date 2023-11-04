@@ -37,5 +37,10 @@ public class JuegosDAO {
         }
 
     }
+    public void borrarJuego(int id){
+        RestTemplate restTemplate=new RestTemplate();
+        restTemplate.delete("http://localhost:8080/product"+id);
+    }
+
 
 }
