@@ -24,7 +24,7 @@ public class JuegosDAO {
                 .basicAuthentication("elarios@pucp.pe", "123456")
                 .build();
 
-        String endPoint = "http://localhost:8081/juegos";
+        String endPoint = "http://localhost:8081/juegos/list";
 
         ResponseEntity<Juegos[]> responseEntity = restTemplate.getForEntity(endPoint, Juegos[].class);
 
