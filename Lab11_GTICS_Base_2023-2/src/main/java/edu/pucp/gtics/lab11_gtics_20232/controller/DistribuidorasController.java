@@ -34,11 +34,10 @@ public class DistribuidorasController {
     @Autowired
     PaisesDAO paisesDAO;
 
-    /*@GetMapping(value = {"/lista"})
+    @GetMapping(value = {"/lista"})
     public String listaDistribuidoras (Model model){
         List<Distribuidoras> listadistribuidoras = distribuidorasRepository.findAll(Sort.by("nombre"));
         model.addAttribute("listadistribuidoras", listadistribuidoras);
-
         return "distribuidoras/lista";
     }
 
@@ -89,19 +88,23 @@ public class DistribuidorasController {
             distribuidorasRepository.deleteById(id);
         }
         return "redirect:/distribuidoras/lista";
-    }*/
+    }
 
 
-    @GetMapping(value = {"/lista"})
+
+
+    /*
+        @GetMapping(value = {"/lista"})
     public String listaDistribuidoras (Model model){
         model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
         return "distribuidoras/lista";
     }
 
-    /*@GetMapping(value = {"", "/", "/vista"})
+
+    @GetMapping(value = {"", "/", "/vista"})
     public String vistaJuegos ( ...){
 
-    }*/
+    }
 
     @GetMapping("/nuevo")
     public String nuevoDistribuidora(@ModelAttribute("distribuidoras") Juegos juegos, Model model){
@@ -150,7 +153,7 @@ public class DistribuidorasController {
         return "redirect:/distribuidoras";
 
     }
-
+*/
 
 
 }
