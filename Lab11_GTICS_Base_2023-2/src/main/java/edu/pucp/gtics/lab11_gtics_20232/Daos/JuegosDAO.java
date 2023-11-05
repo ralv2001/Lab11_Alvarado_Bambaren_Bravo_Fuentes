@@ -1,5 +1,6 @@
 package edu.pucp.gtics.lab11_gtics_20232.Daos;
 
+import edu.pucp.gtics.lab11_gtics_20232.dto.JuegosDto;
 import edu.pucp.gtics.lab11_gtics_20232.entity.Juegos;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,30 +17,59 @@ import java.util.List;
 public class JuegosDAO {
 
     public List<Juegos> listaJuegos() {
+        List<Juegos> lista = new ArrayList<>();
+
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Juegos[]> response = restTemplate.getForEntity(
-                "http://localhost:8080/juegos/list", Juegos[].class);
-        return Arrays.asList(response.getBody());
+
+        String endPoint = "http://localhost:8080/juegos";
+
+        ResponseEntity<Juegos[]> responseEntity = restTemplate.getForEntity(endPoint, Juegos[].class);
+
+        if(responseEntity.getStatusCode().is2xxSuccessful()){
+           Juegos[] body = responseEntity.getBody();
+            lista = Arrays.asList(body);
+        }
+
+        return lista;
+
     }
 
     public void guardarJuego(Juegos juegos) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String url = "";
+        String endPoint = "http://localhost:8080/juegos";
         HttpEntity<Juegos> httpEntity = new HttpEntity<>(juegos, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         if (juegos.getIdjuego() > 0) {
-            restTemplate.put(url, httpEntity, Juegos.class);
+            restTemplate.put(endPoint, httpEntity, Juegos.class);
         } else {
-            restTemplate.postForEntity(url, httpEntity, Juegos.class);
+            restTemplate.postForEntity(endPoint, httpEntity, Juegos.class);
         }
 
     }
+    public Juegos obtenerJuegoPorId(int id){
+        Juegos juegos = null;
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = "http://localhost:8080/juegos/" + id;
+
+        ResponseEntity<JuegosDto> forEntity = restTemplate.getForEntity(url, JuegosDto.class);
+
+        if(forEntity.getStatusCode().is2xxSuccessful()){
+            JuegosDto juegosDto = forEntity.getBody();
+            juegos = juegosDto.getJuegos();
+        }
+
+        return juegos;
+    }
+
+
     public void borrarJuego(int id){
         RestTemplate restTemplate=new RestTemplate();
-        restTemplate.delete("http://localhost:8080/product"+id);
+        restTemplate.delete("http://localhost:8080/juegos"+id);
     }
 
 

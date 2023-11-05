@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/juego")
+@RequestMapping(value = "/juegos")
 public class JuegosController {
 
     @Autowired
@@ -57,10 +57,10 @@ public class JuegosController {
         return "juegos/lista";
     }
 
-    @GetMapping(value = {"", "/", "/vista"})
+    /*@GetMapping(value = {"", "/", "/vista"})
     public String vistaJuegos ( ...){
 
-    }
+    }*/
 
     /*@GetMapping("/juegos/nuevo")
     public String nuevoJuegos(Model model, @ModelAttribute("juego") Juegos juego){
@@ -80,7 +80,7 @@ public class JuegosController {
         return "juegos/editarFrm";
     }
 
-    @GetMapping("/editar")
+    /*@GetMapping("/editar")
     public String editarJuegos(@RequestParam("id") int id, Model model){
         Optional<Juegos> opt = juegosRepository.findById(id);
         List<Plataformas> listaPlataformas = plataformasRepository.findAll();
@@ -95,6 +95,23 @@ public class JuegosController {
             return "juegos/editarFrm";
         }else {
             return "redirect:/juegos/lista";
+        }
+    }*/
+    @GetMapping("/editar")
+    public String editarTransportista(@ModelAttribute("product") Juegos juegos,
+                                      Model model, @RequestParam("id") int id) {
+
+        Juegos juegosBuscar = juegosDAO.obtenerJuegoPorId(id);
+
+        if (juegosBuscar != null) {
+            juegos=juegosBuscar;
+            model.addAttribute("juegos", juegos);
+            model.addAttribute("listaGeneros",generoJuegoDAO.listaGenero());
+            model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
+            model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
+            return "juegos/editarFrm";
+        } else {
+            return "redirect:/juegos";
         }
     }
 
@@ -152,13 +169,13 @@ public class JuegosController {
     @GetMapping("/borrar")
     public String borrarJuego(Model model, @RequestParam("id") int id, RedirectAttributes attr) {
 
-        Juego juegoBuscar = productDao.obtenerProductoPorId(id);
+        Juegos juegoBuscar = juegosDAO.obtenerJuegoPorId(id);
 
-        if (productBuscar != null) {
-            productDao.borrarProducto(id);
+        if (juegoBuscar != null) {
+            juegosDAO.borrarJuego(id);
             attr.addFlashAttribute("msg", "Producto borrado exitosamente");
         }
-        return "redirect:/product";
+        return "redirect:/juegos";
 
     }
 

@@ -16,7 +16,7 @@ public class GeneroJuegoDAO {
     public List<Generos> listaGenero(){
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Generos[]> response = restTemplate.getForEntity(
-                "", Generos[].class);
+                "http://localhost:8080/genero", Generos[].class);
 
         return Arrays.asList(response.getBody());
     }
