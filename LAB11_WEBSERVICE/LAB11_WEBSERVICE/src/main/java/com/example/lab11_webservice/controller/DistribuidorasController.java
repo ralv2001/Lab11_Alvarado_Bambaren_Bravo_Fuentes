@@ -1,6 +1,7 @@
 package com.example.lab11_webservice.controller;
 
 import com.example.lab11_webservice.entity.Distribuidoras;
+import com.example.lab11_webservice.entity.Juegos;
 import com.example.lab11_webservice.repository.DistribuidorasRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -23,11 +24,29 @@ public class DistribuidorasController {
         this.distribuidorasRepository = distribuidorasRepository;
     }
 
-    //LISTAR
     @GetMapping(value = {"/list", ""})
     public List<Distribuidoras> listadistribuidoras() {
         return distribuidorasRepository.findAll();
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<HashMap<String, Object>> buscarDistribuidoras(@PathVariable("id") String idStr) {
+        try {
+            int id = Integer.parseInt(idStr);
+            Optional<Distribuidoras> byId = distribuidorasRepository.findById(id);
+            HashMap<String, Object> respuesta = new HashMap<>();
+            if (byId.isPresent()) {
+                respuesta.put("result", "ok");
+                respuesta.put("distribuidoras", byId.get());
+            } else {
+                respuesta.put("result", "no existe");
+            }
+            return ResponseEntity.ok(respuesta);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 
     // CREAR /distribuidoras y /distribuidoras/
     @PostMapping(value = {"", "/"}, produces = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")

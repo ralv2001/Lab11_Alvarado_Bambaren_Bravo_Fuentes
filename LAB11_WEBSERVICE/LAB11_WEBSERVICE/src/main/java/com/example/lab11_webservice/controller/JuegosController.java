@@ -24,13 +24,28 @@ public class JuegosController {
     }
 
     //LISTAR
-    @GetMapping(value = {"/list", ""})
+    @GetMapping(value = {"/list"})
     public List<Juegos> listajuegos() {
         return juegosRepository.findAll();
     }
 
-
-
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<HashMap<String, Object>> buscarProducto(@PathVariable("id") String idStr) {
+        try {
+            int id = Integer.parseInt(idStr);
+            Optional<Juegos> byId = juegosRepository.findById(id);
+            HashMap<String, Object> respuesta = new HashMap<>();
+            if (byId.isPresent()) {
+                respuesta.put("result", "ok");
+                respuesta.put("juego", byId.get());
+            } else {
+                respuesta.put("result", "no existe");
+            }
+            return ResponseEntity.ok(respuesta);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
     // CREAR /juegos y /juegos/
     @PostMapping(value = {"", "/"}, produces = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
