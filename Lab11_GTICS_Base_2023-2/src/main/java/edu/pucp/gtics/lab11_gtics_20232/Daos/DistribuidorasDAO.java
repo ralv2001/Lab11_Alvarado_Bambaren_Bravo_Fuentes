@@ -35,6 +35,7 @@ public class DistribuidorasDAO {
         return lista;
 
     }
+
     public void guardarDistribuidora(Distribuidoras distribuidoras) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -50,6 +51,7 @@ public class DistribuidorasDAO {
         }
 
     }
+
     public Juegos obtenerDistribuidoraPorId(int id){
         Juegos juegos = null;
 

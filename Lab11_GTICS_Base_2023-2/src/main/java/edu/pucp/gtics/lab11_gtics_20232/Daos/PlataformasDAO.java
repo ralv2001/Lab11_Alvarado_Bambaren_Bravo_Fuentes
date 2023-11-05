@@ -14,7 +14,7 @@ public class PlataformasDAO {
     public List<Plataformas> listaPlataformas(){
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Plataformas[]> response = restTemplate.getForEntity(
-                "http://localhost:8080/plataforma", Plataformas[].class);
+                "http://localhost:8080/plataformas/list", Plataformas[].class);
 
         return Arrays.asList(response.getBody());
     }
