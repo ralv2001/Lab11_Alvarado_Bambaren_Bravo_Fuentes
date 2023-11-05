@@ -29,9 +29,6 @@ public class DistribuidorasController {
         return distribuidorasRepository.findAll();
     }
 
-
-
-
     // CREAR /distribuidoras y /distribuidoras/
     @PostMapping(value = {"", "/"}, produces = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
     public ResponseEntity<HashMap<String, Object>> guardarProducto(
@@ -92,9 +89,6 @@ public class DistribuidorasController {
             return ResponseEntity.badRequest().body(rpta);
         }
     }
-
-
-
 
     // /Product?id
     @DeleteMapping("")

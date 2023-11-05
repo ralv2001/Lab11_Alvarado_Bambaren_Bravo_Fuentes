@@ -1,6 +1,5 @@
 package com.example.lab11_webservice.entity;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
