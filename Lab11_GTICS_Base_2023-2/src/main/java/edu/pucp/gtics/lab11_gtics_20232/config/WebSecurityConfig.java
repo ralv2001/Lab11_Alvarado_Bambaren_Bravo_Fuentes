@@ -17,7 +17,7 @@ public class WebSecurityConfig {
         http.httpBasic();
 
         http.authorizeHttpRequests()
-                .requestMatchers("/api/product").authenticated()
+                .requestMatchers("/generos").authenticated()
                 .anyRequest().permitAll();
 
         return http.build();

@@ -1,5 +1,6 @@
 package edu.pucp.gtics.lab11_gtics_20232.Daos;
 
+import edu.pucp.gtics.lab11_gtics_20232.dto.DistribuidorasDto;
 import edu.pucp.gtics.lab11_gtics_20232.dto.JuegosDto;
 import edu.pucp.gtics.lab11_gtics_20232.entity.Distribuidoras;
 import edu.pucp.gtics.lab11_gtics_20232.entity.Generos;
@@ -23,7 +24,7 @@ public class DistribuidorasDAO {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String endPoint = "http://localhost:8080/distribuidoras";
+        String endPoint = "http://localhost:8081/distribuidoras";
 
         ResponseEntity<Distribuidoras[]> responseEntity = restTemplate.getForEntity(endPoint, Distribuidoras[].class);
 
@@ -40,7 +41,7 @@ public class DistribuidorasDAO {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String endPoint = "http://localhost:8080/distribuidoras";
+        String endPoint = "http://localhost:8081/distribuidoras";
         HttpEntity<Distribuidoras> httpEntity = new HttpEntity<>(distribuidoras, headers);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -52,26 +53,26 @@ public class DistribuidorasDAO {
 
     }
 
-    public Juegos obtenerDistribuidoraPorId(int id){
-        Juegos juegos = null;
+    public Distribuidoras obtenerDistribuidoraPorId(int id){
+        Distribuidoras distribuidoras = null;
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8080/distribuidoras/" + id;
+        String url = "http://localhost:8081/distribuidoras" + id;
 
-        ResponseEntity<JuegosDto> forEntity = restTemplate.getForEntity(url, JuegosDto.class);
+        ResponseEntity<DistribuidorasDto> forEntity = restTemplate.getForEntity(url, DistribuidorasDto.class);
 
         if(forEntity.getStatusCode().is2xxSuccessful()){
-            JuegosDto juegosDto = forEntity.getBody();
-            juegos = juegosDto.getJuegos();
+            DistribuidorasDto distribuidorasDto = forEntity.getBody();
+            distribuidoras = distribuidorasDto.getDistribuidoras();
         }
 
-        return juegos;
+        return distribuidoras;
     }
 
 
     public void borrarDistribuidora(int id){
         RestTemplate restTemplate=new RestTemplate();
-        restTemplate.delete("http://localhost:8080/distribuidoras"+id);
+        restTemplate.delete("http://localhost:8081/distribuidoras"+id);
     }
 }
