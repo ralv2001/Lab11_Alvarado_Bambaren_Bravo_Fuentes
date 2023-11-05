@@ -43,7 +43,7 @@ public class JuegosController {
         this.distribuidorasDAO = distribuidorasDAO;
     }
 
-    @GetMapping(value = {"/lista"})
+    @GetMapping(value = {"/list"})
     public String listaJuegos(Model model) {
         model.addAttribute("listaJuegos", juegosDAO.listaJuegos());
         return "juegos/lista";
