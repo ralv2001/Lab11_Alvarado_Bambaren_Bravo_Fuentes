@@ -27,7 +27,7 @@ public class DistribuidorasDAO {
                 .basicAuthentication("elarios@pucp.pe", "123456")
                 .build();
 
-        String endPoint = "http://localhost:8081/distribuidoras";
+        String endPoint = "http://localhost:8080/distribuidoras";
 
         ResponseEntity<Distribuidoras[]> responseEntity = restTemplate.getForEntity(endPoint, Distribuidoras[].class);
 
@@ -44,7 +44,7 @@ public class DistribuidorasDAO {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String endPoint = "http://localhost:8081/distribuidoras";
+        String endPoint = "http://localhost:8080/distribuidoras";
         HttpEntity<Distribuidoras> httpEntity = new HttpEntity<>(distribuidoras, headers);
 
         RestTemplate restTemplate = new RestTemplateBuilder()
@@ -65,7 +65,7 @@ public class DistribuidorasDAO {
                 .basicAuthentication("elarios@pucp.pe", "123456")
                 .build();
 
-        String url = "http://localhost:8081/distribuidoras" + id;
+        String url = "http://localhost:8080/distribuidoras" + id;
 
         ResponseEntity<DistribuidorasDto> forEntity = restTemplate.getForEntity(url, DistribuidorasDto.class);
 
@@ -82,6 +82,6 @@ public class DistribuidorasDAO {
         RestTemplate restTemplate = new RestTemplateBuilder()
                 .basicAuthentication("elarios@pucp.pe", "123456")
                 .build();
-        restTemplate.delete("http://localhost:8081/distribuidoras"+id);
+        restTemplate.delete("http://localhost:8080/distribuidoras"+id);
     }
 }
