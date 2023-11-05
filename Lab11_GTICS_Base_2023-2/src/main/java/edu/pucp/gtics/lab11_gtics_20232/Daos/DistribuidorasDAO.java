@@ -2,8 +2,8 @@ package edu.pucp.gtics.lab11_gtics_20232.Daos;
 
 import edu.pucp.gtics.lab11_gtics_20232.dto.JuegosDto;
 import edu.pucp.gtics.lab11_gtics_20232.entity.Distribuidoras;
-import edu.pucp.gtics.lab11_gtics_20232.entity.Generos;
 import edu.pucp.gtics.lab11_gtics_20232.entity.Juegos;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,7 +21,9 @@ public class DistribuidorasDAO {
     public List<Distribuidoras> listaDistribuidoras() {
         List<Distribuidoras> lista = new ArrayList<>();
 
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                .basicAuthentication("elarios@pucp.pe", "123456")
+                .build();
 
         String endPoint = "http://localhost:8080/distribuidoras";
 
@@ -43,7 +45,10 @@ public class DistribuidorasDAO {
         String endPoint = "http://localhost:8080/distribuidoras";
         HttpEntity<Distribuidoras> httpEntity = new HttpEntity<>(distribuidoras, headers);
 
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                .basicAuthentication("elarios@pucp.pe", "123456")
+                .build();
+
         if (distribuidoras.getIddistribuidora() > 0) {
             restTemplate.put(endPoint, httpEntity, Distribuidoras.class);
         } else {
@@ -55,7 +60,9 @@ public class DistribuidorasDAO {
     public Juegos obtenerDistribuidoraPorId(int id){
         Juegos juegos = null;
 
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                .basicAuthentication("elarios@pucp.pe", "123456")
+                .build();
 
         String url = "http://localhost:8080/distribuidoras/" + id;
 
@@ -71,7 +78,10 @@ public class DistribuidorasDAO {
 
 
     public void borrarDistribuidora(int id){
-        RestTemplate restTemplate=new RestTemplate();
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                .basicAuthentication("elarios@pucp.pe", "123456")
+                .build();
+
         restTemplate.delete("http://localhost:8080/distribuidoras"+id);
     }
 }
