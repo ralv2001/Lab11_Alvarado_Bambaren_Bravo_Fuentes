@@ -1,7 +1,7 @@
 package edu.pucp.gtics.lab11_gtics_20232.controller;
 
 import edu.pucp.gtics.lab11_gtics_20232.Daos.DistribuidorasDAO;
-import edu.pucp.gtics.lab11_gtics_20232.Daos.GeneroJuegoDAO;
+import edu.pucp.gtics.lab11_gtics_20232.Daos.GenerosDAO;
 import edu.pucp.gtics.lab11_gtics_20232.Daos.JuegosDAO;
 import edu.pucp.gtics.lab11_gtics_20232.Daos.PlataformasDAO;
 import edu.pucp.gtics.lab11_gtics_20232.entity.*;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/juegos")
@@ -38,7 +36,7 @@ public class JuegosController {
     @Autowired
     JuegosDAO juegosDAO;
     @Autowired
-    GeneroJuegoDAO generoJuegoDAO;
+    GenerosDAO generosDAO;
     @Autowired
     PlataformasDAO plataformasDAO;
     @Autowired
@@ -74,7 +72,7 @@ public class JuegosController {
     }*/
     @GetMapping("/nuevo")
     public String nuevoJuego(@ModelAttribute("juego") Juegos juegos, Model model){
-        model.addAttribute("listaGeneros",generoJuegoDAO.listaGenero());
+        model.addAttribute("listaGeneros", generosDAO.listaGenero());
         model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
         model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
         return "juegos/editarFrm";
@@ -106,7 +104,7 @@ public class JuegosController {
         if (juegosBuscar != null) {
             juegos=juegosBuscar;
             model.addAttribute("juegos", juegos);
-            model.addAttribute("listaGeneros",generoJuegoDAO.listaGenero());
+            model.addAttribute("listaGeneros", generosDAO.listaGenero());
             model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
             model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
             return "juegos/editarFrm";
@@ -142,7 +140,7 @@ public class JuegosController {
     public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juegos,BindingResult bindingResult,
                                Model model,RedirectAttributes attributes){
         if(bindingResult.hasErrors()){
-            model.addAttribute("listaGeneros",generoJuegoDAO.listaGenero());
+            model.addAttribute("listaGeneros", generosDAO.listaGenero());
             model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
             model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
             return "juegos/editarFrm";
