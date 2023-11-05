@@ -17,7 +17,7 @@ public class EditorasDAO {
                 .basicAuthentication("elarios@pucp.pe", "123456")
                 .build();
         ResponseEntity<Editoras[]> response = restTemplate.getForEntity(
-                "http://localhost:8080/editoras/list", Editoras[].class);
+                "http://localhost:8080/editoras", Editoras[].class);
         return Arrays.asList(response.getBody());
     }
 

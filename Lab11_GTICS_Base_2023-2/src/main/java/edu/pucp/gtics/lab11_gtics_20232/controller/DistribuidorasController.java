@@ -1,6 +1,9 @@
 package edu.pucp.gtics.lab11_gtics_20232.controller;
 
+import edu.pucp.gtics.lab11_gtics_20232.Daos.DistribuidorasDAO;
+import edu.pucp.gtics.lab11_gtics_20232.Daos.PaisesDAO;
 import edu.pucp.gtics.lab11_gtics_20232.entity.Distribuidoras;
+import edu.pucp.gtics.lab11_gtics_20232.entity.Juegos;
 import edu.pucp.gtics.lab11_gtics_20232.entity.Paises;
 import edu.pucp.gtics.lab11_gtics_20232.repository.DistribuidorasRepository;
 import edu.pucp.gtics.lab11_gtics_20232.repository.PaisesRepository;
@@ -26,8 +29,12 @@ public class DistribuidorasController {
 
     @Autowired
     PaisesRepository paisesRepository;
+    @Autowired
+    DistribuidorasDAO distribuidorasDAO;
+    @Autowired
+    PaisesDAO paisesDAO;
 
-    @GetMapping(value = {"/lista"})
+    /*@GetMapping(value = {"/lista"})
     public String listaDistribuidoras (Model model){
         List<Distribuidoras> listadistribuidoras = distribuidorasRepository.findAll(Sort.by("nombre"));
         model.addAttribute("listadistribuidoras", listadistribuidoras);
@@ -82,6 +89,68 @@ public class DistribuidorasController {
             distribuidorasRepository.deleteById(id);
         }
         return "redirect:/distribuidoras/lista";
+    }*/
+
+
+    @GetMapping(value = {"/lista"})
+    public String listaDistribuidoras (Model model){
+        model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
+        return "distribuidoras/lista";
     }
+
+    /*@GetMapping(value = {"", "/", "/vista"})
+    public String vistaJuegos ( ...){
+
+    }*/
+
+    @GetMapping("/nuevo")
+    public String nuevoDistribuidora(@ModelAttribute("distribuidoras") Juegos juegos, Model model){
+        model.addAttribute("listaPaises", paisesDAO.listaPaises());
+        return "juegos/editarFrm";
+    }
+
+    @PostMapping("/guardar")
+    public String guardarDistribuidora(@ModelAttribute("distribuidoras") @Valid Distribuidoras distribuidoras,BindingResult bindingResult,
+                                Model model,RedirectAttributes attributes){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("listaPaises", paisesDAO.listaPaises());
+            return "distribuidoras/editarFrm";
+        }else{
+            String msg="Distribuidora" + (distribuidoras.getIddistribuidora()==0 ? "creada":"actualizado") + "exitosamente";
+            attributes.addFlashAttribute("msg",msg);
+            distribuidorasDAO.guardarDistribuidora(distribuidoras);
+            return "redirect:/distribuidoras/lista";
+        }
+    }
+    @GetMapping("/editar")
+    public String editarDistribuidora(@ModelAttribute("distribuidoras") Distribuidoras distribuidoras,
+                                      Model model, @RequestParam("id") int id) {
+
+        Distribuidoras distribuidorasBuscar = distribuidorasDAO.obtenerDistribuidoraPorId(id);
+
+        if (distribuidorasBuscar != null) {
+            distribuidoras=distribuidorasBuscar;
+            model.addAttribute("distribuidoras", distribuidoras);
+            model.addAttribute("listaPaises",paisesDAO.listaPaises());
+            return "distribuidoras/editarFrm";
+        } else {
+            return "redirect:/distribuidoras";
+        }
+    }
+
+    @GetMapping("/borrar")
+    public String borrarDistribuidora(Model model, @RequestParam("id") int id, RedirectAttributes attr) {
+
+        Distribuidoras distribuidorasBuscar = distribuidorasDAO.obtenerDistribuidoraPorId(id);
+
+        if (distribuidorasBuscar != null) {
+            distribuidorasDAO.borrarDistribuidora(id);
+            attr.addFlashAttribute("msg", "Distribuidora borrada exitosamente");
+        }
+        return "redirect:/distribuidoras";
+
+    }
+
+
 
 }

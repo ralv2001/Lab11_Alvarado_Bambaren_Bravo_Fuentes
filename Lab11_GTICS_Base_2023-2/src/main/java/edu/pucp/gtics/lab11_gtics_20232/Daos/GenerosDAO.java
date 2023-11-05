@@ -17,7 +17,7 @@ public class GenerosDAO {
                 .basicAuthentication("elarios@pucp.pe", "123456")
                 .build();
         ResponseEntity<Generos[]> response = restTemplate.getForEntity(
-                "http://localhost:8080/generos/list", Generos[].class);
+                "http://localhost:8080/generos", Generos[].class);
 
         return Arrays.asList(response.getBody());
     }
