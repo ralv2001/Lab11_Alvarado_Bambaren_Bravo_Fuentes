@@ -21,7 +21,7 @@ public class JuegosDAO {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String endPoint = "http://localhost:8080/juegos";
+        String endPoint = "http://localhost:8081/juegos";
 
         ResponseEntity<Juegos[]> responseEntity = restTemplate.getForEntity(endPoint, Juegos[].class);
 
@@ -38,7 +38,7 @@ public class JuegosDAO {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String endPoint = "http://localhost:8080/juegos";
+        String endPoint = "http://localhost:8081/juegos";
         HttpEntity<Juegos> httpEntity = new HttpEntity<>(juegos, headers);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -54,7 +54,7 @@ public class JuegosDAO {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String url = "http://localhost:8080/juegos/" + id;
+        String url = "http://localhost:8081/juegos/" + id;
 
         ResponseEntity<JuegosDto> forEntity = restTemplate.getForEntity(url, JuegosDto.class);
 
