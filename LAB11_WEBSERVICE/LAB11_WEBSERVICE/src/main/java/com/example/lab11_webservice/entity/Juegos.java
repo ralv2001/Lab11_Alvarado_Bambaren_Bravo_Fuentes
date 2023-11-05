@@ -31,6 +31,10 @@ public class Juegos {
     private Distribuidoras distribuidora;
 
     @ManyToOne
+    @JoinColumn(name = "ideditora")
+    private Editoras editoras;
+
+    @ManyToOne
     @JoinColumn(name = "idgenero")
     private Generos generos;
 
