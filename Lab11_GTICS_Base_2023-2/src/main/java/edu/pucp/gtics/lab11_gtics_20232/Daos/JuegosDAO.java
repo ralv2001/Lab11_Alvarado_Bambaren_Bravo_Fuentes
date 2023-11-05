@@ -17,10 +17,8 @@ public class JuegosDAO {
     public List<Juegos> listaJuegos() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Juegos[]> response = restTemplate.getForEntity(
-                "", Juegos[].class);
-
+                "http://localhost:8080/juegos/list", Juegos[].class);
         return Arrays.asList(response.getBody());
-
     }
 
     public void guardarJuego(Juegos juegos) {

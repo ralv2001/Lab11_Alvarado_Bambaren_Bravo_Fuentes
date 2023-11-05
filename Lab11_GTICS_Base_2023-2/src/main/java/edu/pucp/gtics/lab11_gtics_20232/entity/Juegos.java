@@ -38,6 +38,18 @@ public class Juegos {
     @Valid
     private Generos genero;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ideditora")
+    private Editora ideditora;
+
+    public Editora getIdeditora() {
+        return ideditora;
+    }
+
+    public void setIdeditora(Editora ideditora) {
+        this.ideditora = ideditora;
+    }
+
     public int getIdjuego() {
         return idjuego;
     }
