@@ -19,31 +19,28 @@ import javax.validation.Valid;
 @RequestMapping(value = "/juegos")
 public class JuegosController {
 
-    @Autowired
-    JuegosRepository juegosRepository;
+    final JuegosRepository juegosRepository;
+    final PlataformasRepository plataformasRepository;
+    final DistribuidorasRepository distribuidorasRepository;
+    final GenerosRepository generosRepository;
+    final UserRepository userRepository;
+    final JuegosDAO juegosDAO;
+    final GenerosDAO generosDAO;
+    final PlataformasDAO plataformasDAO;
+    final DistribuidorasDAO distribuidorasDAO;
 
-    @Autowired
-    PlataformasRepository plataformasRepository;
-
-    @Autowired
-    DistribuidorasRepository distribuidorasRepository;
-
-    @Autowired
-    GenerosRepository generosRepository;
-
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    JuegosDAO juegosDAO;
-    @Autowired
-    GenerosDAO generosDAO;
-    @Autowired
-    PlataformasDAO plataformasDAO;
-    @Autowired
-    DistribuidorasDAO distribuidorasDAO;
-
-
-    /*@GetMapping(value = {"/juegos/lista"})
+    public JuegosController(JuegosRepository juegosRepository, PlataformasRepository plataformasRepository, DistribuidorasRepository distribuidorasRepository, GenerosRepository generosRepository, UserRepository userRepository, JuegosDAO juegosDAO, GenerosDAO generosDAO, PlataformasDAO plataformasDAO, DistribuidorasDAO distribuidorasDAO) {
+        this.juegosRepository = juegosRepository;
+        this.plataformasRepository = plataformasRepository;
+        this.distribuidorasRepository = distribuidorasRepository;
+        this.generosRepository = generosRepository;
+        this.userRepository = userRepository;
+        this.juegosDAO = juegosDAO;
+        this.generosDAO = generosDAO;
+        this.plataformasDAO = plataformasDAO;
+        this.distribuidorasDAO = distribuidorasDAO;
+    }
+/*@GetMapping(value = {"/juegos/lista"})
     public String listaJuegos (Model model){
         model.addAttribute("listaJuegos",juegosRepository.findAll());
         return "juegos/lista";
