@@ -22,6 +22,7 @@ public class JuegosDAO {
         return Arrays.asList(response.getBody());
 
     }
+
     public void guardarJuego(Juegos juegos) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
