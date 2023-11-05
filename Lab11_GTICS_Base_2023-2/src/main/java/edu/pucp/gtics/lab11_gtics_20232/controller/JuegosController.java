@@ -75,6 +75,22 @@ public class JuegosController {
         return "juegos/editarFrm";
     }
 
+    @PostMapping("/guardar")
+    public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juegos,BindingResult bindingResult,
+                                Model model,RedirectAttributes attributes){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("listaGeneros", generosDAO.listaGenero());
+            model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
+            model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
+            return "juegos/editarFrm";
+        }else{
+            String msg="Juego" + (juegos.getIdjuego()==0 ? "creado":"actualizado") + "exitosamente";
+            attributes.addFlashAttribute("msg",msg);
+            juegosDAO.guardarJuego(juegos);
+            return "redirect:/juegos/lista";
+        }
+    }
+
     /*@GetMapping("/editar")
     public String editarJuegos(@RequestParam("id") int id, Model model){
         Optional<Juegos> opt = juegosRepository.findById(id);
@@ -133,21 +149,7 @@ public class JuegosController {
             return "redirect:/juegos/lista";
         }
     }*/
-    @PostMapping("/guardar")
-    public String guardarJuegos(@ModelAttribute("juego") @Valid Juegos juegos,BindingResult bindingResult,
-                               Model model,RedirectAttributes attributes){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("listaGeneros", generosDAO.listaGenero());
-            model.addAttribute("listaPlataformias",plataformasDAO.listaPlataformas());
-            model.addAttribute("listaDistribuidoras",distribuidorasDAO.listaDistribuidoras());
-            return "juegos/editarFrm";
-        }else{
-            String msg="Juego" + (juegos.getIdjuego()==0 ? "creado":"actualizado") + "exitosamente";
-            attributes.addFlashAttribute("msg",msg);
-            juegosDAO.guardarJuego(juegos);
-            return "redirect:/juegos/lista";
-        }
-    }
+
 
 
 
