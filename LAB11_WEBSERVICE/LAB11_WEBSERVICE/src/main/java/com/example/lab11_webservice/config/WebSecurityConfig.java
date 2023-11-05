@@ -1,11 +1,11 @@
-package edu.pucp.gtics.lab11_gtics_20232.config;
+package com.example.lab11_webservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-/*
+
 @Configuration
 public class WebSecurityConfig {
 
@@ -17,7 +17,7 @@ public class WebSecurityConfig {
         http.httpBasic();
 
         http.authorizeHttpRequests()
-                .requestMatchers("/generos").authenticated()
+                .requestMatchers("/juegos/**", "/distribuidoras/**").authenticated()
                 .anyRequest().permitAll();
 
         return http.build();
@@ -25,4 +25,6 @@ public class WebSecurityConfig {
 
 }
 
- */
+
+
+
