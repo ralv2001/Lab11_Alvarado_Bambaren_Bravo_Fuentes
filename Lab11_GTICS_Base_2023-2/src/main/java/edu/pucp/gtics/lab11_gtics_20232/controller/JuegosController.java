@@ -111,9 +111,7 @@ public class JuegosController {
     @GetMapping("/editar")
     public String editarTransportista(@ModelAttribute("product") Juegos juegos,
                                       Model model, @RequestParam("id") int id) {
-
         Juegos juegosBuscar = juegosDAO.obtenerJuegoPorId(id);
-
         if (juegosBuscar != null) {
             juegos=juegosBuscar;
             model.addAttribute("juegos", juegos);
@@ -125,8 +123,6 @@ public class JuegosController {
             return "redirect:/juegos";
         }
     }
-
-
 
     /*@PostMapping("/juegos/guardar")
     public String guardarJuegos(Model model, RedirectAttributes attr, @ModelAttribute("juego") @Valid Juegos juego, BindingResult bindingResult ){
@@ -149,11 +145,6 @@ public class JuegosController {
             return "redirect:/juegos/lista";
         }
     }*/
-
-
-
-
-
 
     /*@GetMapping("/borrar")
     public String borrarDistribuidora(@RequestParam("id") int id){
